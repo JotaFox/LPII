@@ -4,7 +4,7 @@ Considere fixo o juro da poupança em 0.70% a. m.*/
 
 import java.util.Scanner;
 
-public class Ex9{
+public class Ex09{
 
 	public static void main(String[] args){
 
