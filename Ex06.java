@@ -10,7 +10,7 @@ e, por último, associar b ao valor "salvo" na variável auxiliar.*/
 
 import java.util.Scanner;
 
-public class Ex6 {
+public class Ex06 {
 
 	public static void main(String[] args){
 
