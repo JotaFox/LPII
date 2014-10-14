@@ -5,7 +5,7 @@ usuário.*/
 
 import java.util.Scanner;
 
-public class Ex8{
+public class Ex08{
 
 	public static void main(String[] args){
 
