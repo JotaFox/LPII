@@ -70,12 +70,12 @@ public class Ex1{
         	}
         	else if((distAB == distAC) || (distAB == distBC)){
 
-          		System.out.println("Dois lados iguais . Trata-se de um Triangulo Isosceles.\n"); 
-          	}
-          	else{
+        		System.out.println("Dois lados iguais . Trata-se de um Triangulo Isosceles.\n");
+        	}
+        	else{
 
-            	System.out.println("Três lados diferentes. Trata-se de um Triangulo Escaleno.\n");
-            }
+			System.out.println("Três lados diferentes. Trata-se de um Triangulo Escaleno.\n");
+			}
         }
         else{
 
