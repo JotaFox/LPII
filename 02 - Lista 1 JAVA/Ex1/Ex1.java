@@ -64,22 +64,22 @@ public class Ex1{
 
 			imprimeResultados(distAB, distAC, distBC);
 
-        	if (distAB == distAC && distAB == distBC){	
+        		if (distAB == distAC && distAB == distBC){	
 
-        		System.out.println("Três lados iguais . Trata-se de um Triangulo Equilatero.\n");  
+        			System.out.println("Três lados iguais . Trata-se de um Triangulo Equilatero.\n");  
+        		}
+        		else if((distAB == distAC) || (distAB == distBC)){
+
+          			System.out.println("Dois lados iguais . Trata-se de um Triangulo Isosceles.\n"); 
+          		}
+        		else{
+
+            		System.out.println("Três lados diferentes. Trata-se de um Triangulo Escaleno.\n");
+            		}
         	}
-        	else if((distAB == distAC) || (distAB == distBC)){
-
-          		System.out.println("Dois lados iguais . Trata-se de um Triangulo Isosceles.\n"); 
-          	}
         	else{
 
-            	System.out.println("Três lados diferentes. Trata-se de um Triangulo Escaleno.\n");
-            }
-        }
-        else{
-
-       		System.out.println("\nOs pontos dados não formam um triângulo.\n");
-       	}
+       			System.out.println("\nOs pontos dados não formam um triângulo.\n");
+       		}
 	}
 }
