@@ -14,7 +14,7 @@ public class Ex3{
 		invocador.funcaoCoseno();
 		invocador.funcaoTangente();
 		invocador.funcaoCotangente();
-		invocador.imprime();
+		System.out.println(invocador.toString());
 
 	}
 }

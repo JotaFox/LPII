@@ -1,7 +1,7 @@
 public class AnguloObj{
 	
 	protected double arcoRad;
-	public double seno, coseno, tangente, cotangente;
+	private double seno, coseno, tangente, cotangente;
 
 	AnguloObj(double valorDoAngulo){
 		arcoRad = Math.toRadians(valorDoAngulo);
@@ -24,12 +24,13 @@ public class AnguloObj{
 		return cotangente;
 	}
 
-	public void imprime(){
-		System.out.printf("\nArco: %.2f\n",arcoRad ,"rad");
-		System.out.printf("Seno: %.2f\n",seno);
-		System.out.printf("Coseno: %.2f\n",coseno);
-		System.out.printf("Tangente: %.2f\n",tangente);
-		System.out.printf("Cotangente: %.2f\n\n",cotangente);
+	public String toString(){
+		String resposta = "\nArco: " +arcoRad+ 
+						"\nSeno: "+seno+
+						"\nCoseno: "+coseno+
+						"\nTangente: "+tangente+
+						"\nCotangente: "+cotangente+"\n";
+		return resposta;
 	}
 
 }
