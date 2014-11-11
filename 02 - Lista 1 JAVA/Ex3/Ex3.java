@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Ex3{
 	public static void main(String[] args) {
 		
-		double[] valorDoAngulo; 
+		double valorDoAngulo = 0; 
 
 		Scanner sc = new Scanner(System.in);
 
@@ -13,9 +13,22 @@ public class Ex3{
         for (int i = 0; i < n; i++) {
 
 			System.out.println("Digite a medida do angulo: ");
-			valorDoAngulo[i] = sc.nextDouble();
+			valorDoAngulo = sc.nextDouble();
 		}
 
-		// TO-DO MÉTODO DE IMPRESSÃO DO ARRAY DE STRINGS
+		AnguloObj[] array = new AnguloObj[n];//criação de um array do tipo AnguloObj com n posições
+
+		for (int j = 0; j < n; j++) {
+
+			AnguloObj invocador = new AnguloObj(valorDoAngulo);// criação do invocador
+
+			invocador.funcaoSeno();
+			invocador.funcaoCoseno();
+			invocador.funcaoTangente();
+			invocador.funcaoCotangente();
+			System.out.println(invocador.toString());
+
+			array[j] = invocador;
+  		}
 	}
 }
