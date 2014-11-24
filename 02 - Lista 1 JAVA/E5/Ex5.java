@@ -67,8 +67,9 @@ public class Ex5 {
 		System.out.println("\n>>>>>>>>>>>>>>>>>>>>>[Resultado Final]<<<<<<<<<<<<<<<<<<<<<\n");
 		System.out.println("Voce jogou " + total + " vezes!\n" + vezesJogadasCaraCoroa + " vezes o jogo Cara ou Coroa e " + vezesJogadasmenorMaior + " vezes o jogo Maior ou Menor!\n");
 		System.out.println("Voce venceu " + vitorias + " vezes!\n" + vitoriasCaraCoroa + " vezes o jogo Cara ou Coroa e " + vitoriasmenorMaior + " vezes o jogo Maior ou Menor!\n");
-		avalia = JOptionPane.showInputDialog("O que achou do programa?\n" + "Muito Bom! :-) \n" + "Muito Ruim! :-( \n");
-		JOptionPane.showMessageDialog(null, "Obrigado por utilizar o JotaGames 1.0!");
+		System.out.println("[AVALIE]\nEscreva uma mensagem sobre o que achou do programa:\n");
+		avalia = sc.nextLine();
+		System.out.println("\n **********[ Obrigado por utilizar o JotaGames 1.0 ]**********\n");
 	}
 	
 	public static void main(String[] args) {
