@@ -5,51 +5,61 @@ public class Ex3{
 	public static void main(String[] args) {
 		
 		double valorDoAngulo = 0;
-		boolean verify = false; 
+		boolean verificaExecucao = false; 
 
 		Scanner sc = new Scanner(System.in);
 
-		while (verify == false){
+		while (verificaExecucao == false){
 
 			try{
 				System.out.println("Digite o numero de angulos:");
 				int n = sc.nextInt();
 
-				try{
-					AnguloObj[] array = new AnguloObj[n];//criação de um array do tipo AnguloObj com n posições
-					for (int i = 0; i < n; i++) {
+					if (n>0){
+						AnguloObj[] array = new AnguloObj[n];//criação de um array do tipo AnguloObj com n posições
+						for (int i = 0; i < n; i++) {
 
-						System.out.println("Digite a medida do "+ (i+1) +"º angulo: ");
-						valorDoAngulo = sc.nextDouble();
+							boolean verificaEntrada = false;
+							while (verificaEntrada == false){
 
-						AnguloObj invocador = new AnguloObj(valorDoAngulo);// criação do invocador
+								try{
+									System.out.println("Digite a medida do "+ (i+1) +"º angulo: ");
+									valorDoAngulo = sc.nextDouble();
 
-						invocador.funcaoSeno();
-						invocador.funcaoCoseno();
-						invocador.funcaoTangente();
-						invocador.funcaoCotangente();
-						invocador.toString();
+									AnguloObj invocador = new AnguloObj(valorDoAngulo);// criação do invocador
 
-						array[i] = invocador;
-					}
+									invocador.funcaoSeno();
+									invocador.funcaoCoseno();
+									invocador.funcaoTangente();
+									invocador.funcaoCotangente();
+									invocador.toString();
 
-					System.out.println("\n\nResultado =====================");
+									array[i] = invocador;
 
-					for (int i = 0; i < array.length; i++) {
-		    			System.out.println(array[i]);
+									verificaEntrada = true;
+								}
+								catch(InputMismatchException e1){
+									System.out.println("Você digitou um valor inválido! Tente Novamente!");
+									String limpaBuff = sc.next();
+								}
+							}
+						}
+
+						System.out.println("\n\nResultado =====================");
+
+						for (int i = 0; i < array.length; i++) {
+			    			System.out.println(array[i]);
+			  			}
+			  			verificaExecucao = true;
 		  			}
-		  			verify = true;
-				}
-				catch(NegativeArraySizeException e1){
-					System.out.println("Você não pode entrar com um número negativo de vezes!\n");
-				}
+		  			else{
+		  				System.out.println("Digite um valor maior que 0!\n");
+		  			}
 			}
 			catch(InputMismatchException e2){
 				System.out.println("O que voce digitou nao é um valor válido! Tente novamente!\n");
 				String limpaBuff = sc.next();
 			}
-		}
-
-        
+		}    
 	}
 }
