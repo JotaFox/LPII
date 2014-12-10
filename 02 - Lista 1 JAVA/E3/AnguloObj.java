@@ -32,5 +32,4 @@ public class AnguloObj{
 						"\nCotangente: "+cotangente+"\n";
 		return resposta;
 	}
-
 }
