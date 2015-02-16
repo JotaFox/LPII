@@ -1,0 +1,9 @@
+package lp2g20.locadora;
+
+@SuppressWarnings("serial")
+public class NenhumaCopiaAlugadaEx extends Exception{
+	
+	public NenhumaCopiaAlugadaEx(){
+		super("Esta copia nao esta alugada no momento!");
+	}
+}

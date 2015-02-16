@@ -1,0 +1,9 @@
+package lp2g20.locadora;
+
+
+public class ClienteNaoCadastradoEx extends Exception {
+	
+	public ClienteNaoCadastradoEx(){
+		super("Esse cliente nao esta cadastrado!");
+	}
+}

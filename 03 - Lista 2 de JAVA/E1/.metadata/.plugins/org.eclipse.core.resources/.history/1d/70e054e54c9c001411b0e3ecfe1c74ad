@@ -1,0 +1,28 @@
+package lp2g20.locadora;
+
+public class Aluguel {
+
+	private String dtLoc, dtDev, codFilme;
+	
+	public Aluguel(String loc, String dev, String cod){
+		this.codFilme = cod;
+		this.dtDev = dev;
+		this.dtLoc = loc;
+	}
+	
+	public String getDtLoc(){
+		return dtLoc;
+	}
+	
+	public String getDtdev(){
+		return dtDev;
+	}
+	
+	public String getCodFilme(){
+		return codFilme;
+	}
+	
+	public String toString(){
+		return "Data de Locacao = " + dtLoc + "\n Data de Devolucao = " + dtDev + "\n Codigo do filme = " + codFilme;
+	}
+}

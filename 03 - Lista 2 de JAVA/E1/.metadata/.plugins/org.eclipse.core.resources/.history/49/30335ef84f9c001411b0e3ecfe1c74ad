@@ -1,0 +1,166 @@
+package lp2g20.locadora;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Hashtable;
+
+
+public class Locadora{
+
+	private Hashtable <String, Cliente> cadastroCliente = new Hashtable <String, Cliente> ();
+	private Hashtable <String, Filme> cadastroFilme = new Hashtable <String,Filme> (); 
+	
+	public Locadora(){
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Locadora(String filme, String cliente) throws FileNotFoundException, IOException, ClassNotFoundException{
+		
+		ObjectInputStream arqCadastroDeFilmes = new ObjectInputStream(new FileInputStream(filme));
+		this.cadastroFilme = (Hashtable <String, Filme>) arqCadastroDeFilmes.readObject();
+		arqCadastroDeFilmes.close();
+		
+		ObjectInputStream arqCadastroDeClientes = new ObjectInputStream(new FileInputStream(cliente));
+		this.cadastroCliente = (Hashtable <String, Cliente>) arqCadastroDeClientes.readObject();
+		arqCadastroDeClientes.close();
+		
+	}
+	
+	public void cadastraCliente(Cliente clie){
+		cadastroCliente.put(clie.getCodCliente(), clie);
+	}
+	
+	public void cadastraFilme(Filme filme){
+		cadastroFilme.put(filme.getCodFilme(), filme);
+	}
+	
+	public void salvaArquivo(String nomearq) throws IOException{
+		
+		if(nomearq.equals("filmes")){
+			ObjectOutputStream arquivo = new ObjectOutputStream(new FileOutputStream(nomearq + ".dat"));
+			arquivo.writeObject(cadastroFilme);
+			arquivo.close();
+		}
+		
+		else if(nomearq.equals("clientes")){
+			ObjectOutputStream arquivo = new ObjectOutputStream(new FileOutputStream(nomearq + ".dat"));
+			arquivo.writeObject(cadastroCliente);
+			arquivo.close();
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void leArquivo(String nomearq) throws FileNotFoundException, IOException, ClassNotFoundException{
+		
+		if(nomearq.equals("filmes.dat")){
+			ObjectInputStream arquivo = new ObjectInputStream(new FileInputStream(nomearq));
+			this.cadastroFilme = (Hashtable <String, Filme>) arquivo.readObject();
+			arquivo.close();
+		}
+		
+		else if(nomearq.equals("clientes.dat")){
+			ObjectInputStream arquivo = new ObjectInputStream(new FileInputStream(nomearq));
+			this.cadastroCliente = (Hashtable <String, Cliente>) arquivo.readObject();
+			arquivo.close();
+		}					
+	}
+	
+
+	public void alugaFilme(Cliente cliente, Filme filme) throws CopiaNaoDisponivel{
+		
+		Calendar calendario = Calendar.getInstance();
+		DateFormat datform = DateFormat.getDateInstance(DateFormat.MEDIUM);	
+		String data = datform.format(calendario.getTime());
+		calendario.add(Calendar.DAY_OF_MONTH, 7);
+		String dtdev = datform.format(calendario.getTime());
+		
+		filme.aloca();
+		cliente.adFilmeHist(data, dtdev, filme.getCodFilme());
+		System.out.println("Data de devolucao: " + dtdev);
+	}
+	
+	public String imprimeFilmes(){
+		
+		ArrayList<String> lista = new ArrayList<String>();
+		String ordenados = "";
+		
+		for(Filme f : this.cadastroFilme.values()){
+			lista.add(f.getTitulo());
+		}
+		
+		Collections.sort(lista);
+	
+		for(int i = 0; i< lista.size(); i++){
+			for(Filme f : this.cadastroFilme.values()){
+				if(lista.get(i).equals(f.getTitulo())){
+					ordenados += f.toString() + "\n";
+					
+					break;							
+				}
+			}
+		}
+		
+		return ordenados;	
+	}
+	
+	public String imprimeClientes(){
+		
+		ArrayList<String> lista = new ArrayList<String>();
+		String ordenados = "";
+		
+		for(Cliente c : this.cadastroCliente.values()){
+			lista.add(c.getNome());
+		}
+		
+		Collections.sort(lista);
+		
+		for(int i = 0; i< lista.size(); i++){
+			for(Cliente f : this.cadastroCliente.values()){
+				if(lista.get(i).equals(f.getNome())){
+					ordenados += f.toString() + "\n";
+					break;							
+				}
+			}
+		}
+		return ordenados;	
+	}
+
+	public Filme getFilme(String cogido) throws FilmeNaoCadastrado{
+		
+		if(cadastroFilme.containsKey(cogido)){
+			return cadastroFilme.get(cogido);
+		}
+		
+		else{
+			throw new FilmeNaoCadastrado();
+		}		
+	}
+
+	public Cliente getCliente(String cogido) throws ClienteNaoCadastrado{
+		
+		if(cadastroCliente.containsKey(cogido)){
+			return cadastroCliente.get(cogido);
+		}
+		
+		else{
+			throw new ClienteNaoCadastrado();
+		}	
+	}
+	
+	public Hashtable <String, Cliente> getCadastroCliente(){
+		return this.cadastroCliente;
+	}
+
+	public Hashtable <String, Filme> getCadastroFilme(){
+		return this.cadastroFilme;
+	}
+}

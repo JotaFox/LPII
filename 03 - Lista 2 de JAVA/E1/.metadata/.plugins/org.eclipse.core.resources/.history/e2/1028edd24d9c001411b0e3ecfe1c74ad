@@ -1,0 +1,64 @@
+package lp2g20.locadora;
+
+public class Filme{
+
+	private String codFilme, titulo, categoria;
+	private int quantidade, alugados = 0;
+
+	public Filme(String cod, String titu, String categ, int qtd) {
+		this.categoria = categ;
+		this.codFilme = cod;
+		this.quantidade = qtd;
+		this.titulo = titu;
+	}
+
+	public Filme(String titu) {
+		this.titulo = titu;
+	}
+
+	public void aloca() throws CopiaNaoDisponivel {
+
+		if (quantidade == alugados) {
+			throw new CopiaNaoDisponivel();
+		}
+
+		else {
+			alugados += 1;
+		}
+	}
+
+	public void devolve() throws NenhumaCopiaAlugada {
+		if (alugados == 0) {
+			throw new NenhumaCopiaAlugada();
+		}
+
+		else {
+			alugados -= 1;
+		}
+	}
+	
+	
+	public String getCodFilme(){
+		return codFilme;
+	}
+	
+	public String getTitulo(){
+		return titulo;
+	}
+	
+	public String getCategoria(){
+		return categoria;
+	}
+	
+	public int getQuantidade(){
+		return quantidade;
+	}
+	
+	public int getAlugados(){
+		return alugados;
+	}
+	
+	public String toString(){
+		return "\nTitulo = " + titulo + "\nCodigo = " + codFilme + "\nCategoria = " + categoria + "\nQuantidade = " + quantidade + "\nAlugados = " + alugados;
+	}
+}

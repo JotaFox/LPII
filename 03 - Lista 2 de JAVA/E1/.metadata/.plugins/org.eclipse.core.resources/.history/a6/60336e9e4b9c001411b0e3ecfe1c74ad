@@ -1,0 +1,27 @@
+package lp2g20.locadora;
+
+import java.io.Serializable;
+
+public class Pessoa implements Serializable{
+	
+	
+	private static final long serialVersionUID = 3161002698313902040L;
+	private String nome, dt_nasc;
+	
+	public Pessoa(String name, String date){
+		this.dt_nasc = date;
+		this.nome = name;
+	}
+	
+	public String getNome(){
+		return nome;
+	}
+	
+	public String getDt_nasc(){
+		return dt_nasc;
+	}
+
+	public String toString(){
+		return "Nome = " + nome + "\nData de Nascimento = " + dt_nasc;
+	}
+}

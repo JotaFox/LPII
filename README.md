@@ -1,4 +1,0 @@
-LPII
-====
-
-Exercícios de JAVA

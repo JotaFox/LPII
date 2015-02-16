@@ -1,0 +1,26 @@
+package lp2g20.locadora;
+
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Pessoa implements Serializable{
+	
+	private String nome, dt_nasc;
+	
+	public Pessoa(String name, String date){
+		this.dt_nasc = date;
+		this.nome = name;
+	}
+	
+	public String getNome(){
+		return nome;
+	}
+	
+	public String getDt_nasc(){
+		return dt_nasc;
+	}
+
+	public String toString(){
+		return "Nome = " + nome + "\nData de Nascimento = " + dt_nasc;
+	}
+}

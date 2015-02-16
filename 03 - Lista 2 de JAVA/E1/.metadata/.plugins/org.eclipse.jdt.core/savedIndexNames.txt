@@ -1,0 +1,2 @@
+INDEX VERSION 1.127+/home/josejr/Área de Trabalho/Exercicios/LP II/.metadata/.plugins/org.eclipse.jdt.core
+1120679816.index

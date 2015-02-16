@@ -1,0 +1,8 @@
+package lp2g20.locadora;
+
+public class CopiaNaoDisponivelEx extends Exception{
+
+	public CopiaNaoDisponivelEx(){
+		super("Esta copia nao esta disponivel no momento!");
+	}
+}

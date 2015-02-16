@@ -1,0 +1,38 @@
+package lp2g20.locadora;
+
+import java.util.Vector;
+
+@SuppressWarnings("serial")
+public class Cliente extends Pessoa{
+
+	private String endereco, codigoCliente;
+	private Vector <Aluguel> historico  = new Vector <Aluguel> ();
+	
+	public Cliente(String endereco, String codigoCliente, String nome, String data){
+		super(nome, data);
+		this.codCliente = cod;
+		this.endereco = end;
+	}
+
+	public void adFilmeHist(String dtLoc, String dtDev, String codFilme){
+		Aluguel aluga = new Aluguel(dtLoc, dtDev, codFilme);
+		historico.add(aluga);
+	}
+	
+	public String getCodCliente(){
+		return codCliente;
+	}
+	
+	public String getEndereco(){
+		return endereco;
+	}
+	
+	public Vector<Aluguel> getHistorico(){
+		return historico;
+	}
+	
+	public String toString(){
+		return super.toString() + "\nCodigo = " + codCliente + "\nEndereco = " + endereco + "\nHistorico = " + historico;
+	}
+
+}

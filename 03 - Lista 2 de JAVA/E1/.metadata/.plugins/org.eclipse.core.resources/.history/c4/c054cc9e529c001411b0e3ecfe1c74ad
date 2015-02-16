@@ -1,0 +1,9 @@
+package lp2g20.locadora;
+
+@SuppressWarnings("serial")
+public class FilmeNaoCadastradoEx extends Exception {
+	
+	public FilmeNaoCadastradoEx(){
+		super("Esse filme nao esta cadastrado!");
+	}
+}

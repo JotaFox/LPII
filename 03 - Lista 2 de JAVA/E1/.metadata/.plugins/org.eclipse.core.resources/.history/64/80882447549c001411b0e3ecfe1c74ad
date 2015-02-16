@@ -1,0 +1,392 @@
+
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+
+import lp2g20.locadora.Cliente;
+import lp2g20.locadora.ClienteNaoCadastradoEx;
+import lp2g20.locadora.CopiaNaoDisponivelEx;
+import lp2g20.locadora.Filme;
+import lp2g20.locadora.FilmeNaoCadastradoEx;
+import lp2g20.locadora.Locadora;
+import lp2g20.locadora.NenhumaCopiaAlugadaEx;
+
+public class Ex1 {
+	
+	private static Scanner leitor = new Scanner(System.in);
+	private static String data = "\\d{2}/\\d{2}/\\d{4}";
+	private static Locadora Permon;
+		
+	static void Cadastro(Locadora novaLocadora) {
+
+		String endereco, codigoCliente, nome, dataDeNascimento, codigoFilme, tituloDoFilme, categoria, opcao;
+		int quantidade;
+
+		while (true) {
+			
+			System.out.println("Selecione a opcao referente a operacao desejada: \n1 - Cadastrar Clientes\n2 - Cadastrar Filmes\n3 - Salvar em arquivo");
+			opcao = leitor.nextLine();
+
+			if (opcao.equals("1")) {
+
+				System.out.println("Digite o codigo do cliente: ");
+				codigoCliente = leitor.nextLine();
+
+				System.out.println("Digite o nome do cliente: ");
+				nome = leitor.nextLine();
+
+				System.out.println("Digite o endereco do cliente: ");
+				endereco = leitor.nextLine();
+
+				while (true) {
+					System.out.println("Digite a data de nascimento do cliente: ");
+					if ((dataDeNascimento = leitor.nextLine()).matches(data)) {
+						break;
+					} 
+					else {
+						System.out.println("Data invalida!");
+					}
+				}
+
+				novaLocadora.cadastraCliente(new Cliente(endereco, codigoCliente, nome, dataDeNascimento));
+				System.out.println("Cliente cadastrado!");
+				break;
+			}
+
+			else if (opcao.equals("2")) {
+
+				System.out.println("Digite o codigo do filme: ");
+				codigoFilme = leitor.nextLine();
+
+				System.out.println("Digite o titulo do filme: ");
+				tituloDoFilme = leitor.nextLine();
+
+				System.out.println("Digite a categoria do filme: ");
+				categoria = leitor.nextLine();
+
+				while (true) {
+					try {
+						System.out.println("Digite a quantidade de filmes: ");
+						quantidade = Integer.parseInt(leitor.nextLine());
+						break;
+					} 
+					catch (NumberFormatException erro) {
+						System.out.println("Quantidade invalida, digite apenas numeros!");
+					}
+				}
+
+				novaLocadora.cadastraFilme(new Filme(codigoFilme, tituloDoFilme, categoria, quantidade));
+				System.out.println("Filme cadastrado!");
+				break;
+			}
+
+			else if (opcao.equals("3")) {
+
+				while (true) {
+
+					System.out.println("Que arquivo deseja salvar?\nA - Filmes\nB - Clientes");
+					opcao = leitor.nextLine();
+
+					if (opcao.equalsIgnoreCase("a")) {
+						try {
+							novaLocadora.salvaArquivo("filmes");
+							System.out.println("Arquivo salvo!");
+							break;
+						} 
+						catch (IOException erro) {
+							System.out.println("Erro ao salvar arquivo!");
+						}
+					}
+
+					else if (opcao.equalsIgnoreCase("b")) {
+						try {
+							novaLocadora.salvaArquivo("clientes");
+							System.out.println("Arquivo salvo!");
+							break;
+						} 
+						catch (IOException erro) {
+							System.out.println("Erro ao salvar arquivo!");
+						}
+					}
+
+					else {
+						System.out.println("Opcao invalida!");
+					}
+				}
+				break;
+			}
+			
+			else {
+				System.out.println("Opcao invalida!");
+			}
+		}
+	}
+	
+	public static void Manutencao(Locadora loc){
+		try {
+			loc.salvaArquivo("clientes");
+			loc.salvaArquivo("filmes");
+			System.out.println("Arquivos criados com sucesso!");
+		} 
+		catch (IOException erro) {
+			erro.printStackTrace();
+			System.out.println("Erro ao criar arquivos!");
+		}
+
+		try {
+			loc.leArquivo("filmes.dat");
+			loc.leArquivo("clientes.dat");
+			System.out.println("Arquivo de Clientes: \n");
+			System.out.println(loc.imprimeClientes());
+			System.out.println("Arquivo de Filmes: \n");
+			System.out.println(loc.imprimeFilmes());
+		} 
+		catch (FileNotFoundException erro) {
+			System.out.println("Arquivo nao encontrado!");
+		} 
+		catch (IOException erro) {
+			erro.printStackTrace();
+			System.out.println("Erro ao abrir arquivos!");
+		} 
+		catch (ClassNotFoundException erro) {
+			System.out.println("Erro ao ler arquivos!");
+		}
+		catch(ClassCastException erro){
+			System.out.println("Tipos de arquivos invalidos!");
+		}
+
+		try {
+			loc.salvaArquivo("clientes");
+			loc.salvaArquivo("filmes");
+			System.out.println("Arquivos salvos com sucesso!");
+		} 
+		catch (IOException erro) {
+			System.out.println("Erro ao criar arquivos!");
+		}
+	}
+
+	
+	static void Locacao(Locadora loc) throws CopiaNaoDisponivelEx, ClienteNaoCadastradoEx, FilmeNaoCadastradoEx, NenhumaCopiaAlugadaEx {
+
+		String op;
+
+		while (true) {
+			System.out.println("Selecione a opcao referente a operacao desejada: \n1 - Exibir cadastro de filmes\n2 - Alugar um filme\n3 - Devolver um filme");
+			op = leitor.nextLine();
+			
+			if (op.equals("1")) {
+				try{
+					System.out.println(loc.imprimeFilmes());
+					break;
+				}
+				catch(ClassCastException erro){
+					System.out.println("Tipos de arquivos invalidos!");
+				}
+			}
+
+			else if (op.equals("2")) {
+
+				String codc, codf;
+				Cliente clie;
+				Filme fil;
+				
+				while (true) {
+					try {
+						System.out.println("Digite o codigo do cliente: ");
+						codc = leitor.nextLine();
+						clie = loc.getCliente(codc);
+						break;
+					}
+					catch (ClienteNaoCadastradoEx erro) {
+						System.out.println(erro.getMessage());
+					} 	
+				}
+				
+				try{
+					if(clie.getHistorico().size() == 5){
+						throw new LimiteDeAluguelExcedido();
+					}
+				}
+				catch(LimiteDeAluguelExcedido erro){
+					System.out.println(erro.getMessage());
+					break;
+				}
+				while(true){
+					try{	
+						System.out.println("Digite o codigo do filme: ");
+						codf = leitor.nextLine();
+						fil = loc.getFilme(codf);
+						break;
+					}
+					catch (FilmeNaoCadastradoEx erro) {
+						System.out.println(erro.getMessage());
+					}
+					
+				}
+				try{						
+					loc.alugaFilme(clie,fil);
+					System.out.println("Filme alugado com sucesso!");
+					
+					break;
+				} 					
+				catch (CopiaNaoDisponivelEx erro) {
+						System.out.println(erro.getMessage());
+						break;			
+				}
+			}
+
+			else if (op.equals("3")) {
+
+				String codf;
+				Filme fil;
+				
+				while (true) {
+					try {
+						System.out.println("Digite o codigo do filme: ");
+						codf = leitor.nextLine();
+						fil = loc.getFilme(codf);
+						break;
+					} 
+					catch (FilmeNaoCadastradoEx erro) {
+						System.out.println(erro.getMessage());
+					}
+				}
+				try{
+					fil.devolve();
+					System.out.println("O filme foi devolvido!");
+					break;
+				}
+				catch (NenhumaCopiaAlugadaEx erro) {
+					System.out.println(erro.getMessage());
+					break;
+				}
+			}
+			
+			else{
+				System.out.println("Opcao invalida!");
+			}
+		}
+	}
+	
+	static void Relatorio(Locadora loc){
+		
+		String op;
+		
+		while(true){
+			
+			System.out.println("Selecione a opcao referente a operacao desejada: \n1 - Listar acervo de filmes\n2 - Listar cadastro de clientes\n3 - Verificar historico de cliente:");
+			op = leitor.nextLine();
+
+			if(op.equals("1")){
+				try{
+					System.out.println(loc.imprimeFilmes());
+					break;
+				}
+				catch(ClassCastException erro){
+					System.out.println("Tipos de arquivos invalidos!");
+				}
+			}
+			else if(op.equals("2")){
+				try{
+					System.out.println(loc.imprimeClientes());
+					break;
+				}
+				catch(ClassCastException erro){
+					System.out.println("Tipos de arquivos invalidos!");
+				}
+			}
+			else if(op.equals("3")){
+				
+				Cliente clie;
+				String codc;
+				
+				try{
+					System.out.println("Digite o codigo do cliente: ");
+					codc = leitor.nextLine();
+					clie = loc.getCliente(codc);
+					System.out.println(clie.getHistorico());
+					break;
+				}
+				catch(ClienteNaoCadastradoEx erro){
+					System.out.println(erro.getMessage());
+				}
+				catch(ClassCastException erro){
+					System.out.println("Tipos de arquivos invalidos!");
+				}
+			}
+			else{
+				System.out.println("Opcao invalida!");
+			}
+		}
+	}
+
+	public static void main(String[] args) throws FileNotFoundException, IOException, CopiaNaoDisponivelEx, ClienteNaoCadastradoEx, FilmeNaoCadastradoEx, NenhumaCopiaAlugadaEx {
+		
+		
+		String op, filme, cliente;
+		
+		
+		while(true){
+			System.out.println("Selecione a opcao referente a operacao desejada: \n1 - Carregar locadora a partir de arquivos\n2 - Criar nova locadora");
+			op = leitor.nextLine();
+			
+			if(op.equals("1")){
+				try{
+					System.out.println("Digite o nome do arquivo de filmes(com a extensao): ");
+					filme = leitor.nextLine();
+					System.out.println("Digite o nome do arquivo de clientes(com a extensao): ");
+					cliente = leitor.nextLine();
+					Permon = new Locadora(filme, cliente);
+					break;
+				}
+			
+				catch(FileNotFoundException erro){
+					System.out.println("Arquivo nao encontrado!");
+				}
+				catch(IOException erro){
+					System.out.println("Erro ao abrir arquivos!");
+				}
+				catch(Exception erro){
+					System.out.println("Erro ao ler arquivos!");
+				}
+			}
+			else if(op.equals("2")){
+				Permon = new Locadora();
+				break;
+			}
+			else{
+				System.out.println("Opcao invalida!");
+			}
+		}
+		
+		System.out.println("Bem-vindo a Locadora Permon!");
+		System.out.println("\nInformamos que, de acordo com nosso politica, cada cliente pode alugar ate 5 filmes por vez!");
+		System.out.println("A data de devolucao eh 7 dias (correntes) apos da data de locacao.\n");
+		
+		while(true){
+			System.out.println("Selecione a opcao referente a operacao desejada: \n1 - Cadastro\n2 - Locacao\n3 - Relatorio\n4 - Manutencao\n5 - Sair");
+			op = leitor.nextLine();
+			
+			if(op.equals("1")){
+				Cadastro(Permon);
+			}
+			else if(op.equals("2")){
+				Locacao(Permon);
+			}
+			else if(op.equals("3")){
+				Relatorio(Permon);
+			}
+			else if(op.equals("4")){
+				Manutencao(Permon);
+			}
+			else if(op.equals("5")){
+				System.out.println("Encerrando o sistema...");
+				break;
+			}
+			else{
+				System.out.println("Opcao invalida!");
+			}
+		}
+	}
+}
